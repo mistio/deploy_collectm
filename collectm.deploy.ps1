@@ -3,46 +3,27 @@ Param(
 
     [Parameter(Mandatory=$true)]
     [ValidateNotNullOrEmpty()]
-    [string]$url,
+	[string]$installerPath,
 
-    [Parameter(Mandatory=$true)]
-    [ValidateNotNullOrEmpty()]
-    [string]$filePath
+    [Parameter(Mandatory=$false)]
+    [switch]$SetupConfigFile=$false,
+
+    [Parameter(Mandatory=$false)]
+	[string]$configArgs=""
 
 )
 
-if ($runScript -eq $true -and !$args) {
-    Write-Host "You want the script to run but you didn't provide any arguments!"
-    Exit
-}
-
-"Downloading $url"
-$uri = New-Object "System.Uri" "$url"
-$request = [System.Net.HttpWebRequest]::Create($uri)
-## 15 second timeout ##
-$request.set_Timeout(15000)
-$response = $request.GetResponse()
-$totalLength = [System.Math]::Floor($response.get_ContentLength()/1024)
-$responseStream = $response.GetResponseStream()
-$targetStream = New-Object -TypeName System.IO.FileStream -ArgumentList $filePath, Create
-$buffer = New-Object byte[] 10KB
-$count = $responseStream.Read($buffer,0,$buffer.length)
-$downloadedBytes = $count
-$iterations = 0
-$startLeft = [Console]::CursorLeft
-$startTop = [Console]::CursorTop
-while ($count -gt 0) {
-    [Console]::SetCursorPosition($startLeft, $startTop)
-    $targetStream.Write($buffer, 0, $count)
-    $count = $responseStream.Read($buffer,0,$buffer.length)
-    $downloadedBytes = $downloadedBytes + $count
-    $iterations += 1
-    if (($iterations % 130 -eq 0) -or ([System.Math]::Floor($downloadedBytes/1024) -eq $totalLength)) {
-        [System.Console]::Write("Downloaded {0}K of {1}K`n", [System.Math]::Floor($downloadedBytes/1024), $totalLength)
+Start-Process $installerPath -ArgumentList "/S" -Wait
+Write-Host "Installed CollectM agent"
+if ($SetupConfigFile -eq $true) {
+    $installationDir = "C:\Program Files\CollectM"
+    if ((Test-Path $installationDir) -eq $false) {
+        $installDir = "C:\Program Files (x86)\CollectM"
+        if ((Test-Path $installationDir) -eq $false) {
+            Write-Host "could not locate installation directory of CollectM"
+            Exit
+        }
     }
+    Write-Host "Running: .\collectm.config.ps1 -filePath ""$installationDir\config\default.json"" $configArgs -restartService -svcPath ""$installationDir\bin\nssm.exe"" "
+    Invoke-Expression ".\collectm.config.ps1 -filePath ""$installationDir\config\default.json"" $configArgs -restartService -svcPath ""$installationDir\bin\nssm.exe"" "
 }
-Write-Host "Finished Download"
-$targetStream.Flush()
-$targetStream.Close()
-$targetStream.Dispose()
-$responseStream.Dispose()
