@@ -3,7 +3,7 @@ Param(
 
     [Parameter(Mandatory=$false)]
     [ValidateNotNullOrEmpty()]
-	[string]$collectMRepo="https://github.com/perfwatcher/collectm/releases/",
+	[string]$collectMUrl="https://github.com/perfwatcher/collectm/releases/latest",
 
     [Parameter(Mandatory=$false)]
     [ValidateNotNullOrEmpty()]
@@ -12,10 +12,6 @@ Param(
     [Parameter(Mandatory=$false)]
     [ValidateNotNullOrEmpty()]
 	[string]$scriptGitBranch="master",
-
-    [Parameter(Mandatory=$false)]
-    [ValidateNotNullOrEmpty()]
-	[string]$version="latest",
 
     [Parameter(Mandatory=$false)]
     [switch]$SetupConfigFile=$false,
@@ -64,12 +60,6 @@ if ($SetupConfigFile -eq $true -and !$setupArgs) {
  }
 
 
-if ($version -ne "latest") {
-tag/v
-    $collectmDownloadUrl = "https://github.com/perfwatcher/collectm/releases/tag/v" + $version
-} else {
-    $collectmDownloadUrl = "https://github.com/perfwatcher/collectm/releases/latest"
-}
 
 $collectmDeployScriptUrl = $collectMScriptRepo + "/blob/" + $scriptGitBranch + "/collectm.deploy.ps1?raw=true"
 
@@ -96,9 +86,9 @@ Write-Host "Downloading Collectm config script: .\collectm.download.ps1 -url ""$
 Invoke-Expression ".\collectm.download.ps1 -url ""$collectmConfigScriptUrl"" -filePath 'collectm.config.ps1'"
 
 if ($SetupConfigFile -eq $true) {
-    $temp = ".\collectm.deploy.ps1 -installerPath ""$installerPath"" -SetupConfigFile -configArgs '" + $setupArgs + "'"
-    Write-Host "Running: $temp"
-    Invoke-Expression "$temp"
+    $setup_command = ".\collectm.deploy.ps1 -installerPath ""$installerPath"" -SetupConfigFile -configArgs '" + $setupArgs + "'"
+    Write-Host "Running: $setup_command"
+    Invoke-Expression "$setup_command"
 } else {
     Write-Host "Running: .\collectm.deploy.ps1 -installerPath ""$installerPath"""
     Invoke-Expression ".\collectm.deploy.ps1 -installerPath ""$installerPath"""
