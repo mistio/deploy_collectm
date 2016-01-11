@@ -7,7 +7,7 @@ Param(
 
     [Parameter(Mandatory=$false)]
     [ValidateNotNullOrEmpty()]
-	[string]$collectMScriptRepo="https://github.com/mistio/deploy_collectm",
+	[string]$collectMScriptRepo="https://raw.githubusercontent.com/mistio/deploy_collectm",
 
     [Parameter(Mandatory=$false)]
     [ValidateNotNullOrEmpty()]
