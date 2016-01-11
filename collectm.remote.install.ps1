@@ -3,7 +3,7 @@ Param(
 
     [Parameter(Mandatory=$false)]
     [ValidateNotNullOrEmpty()]
-	[string]$collectMUrl="https://github.com/perfwatcher/collectm/releases/latest",
+	[string]$collectMUrl="https://github.com/perfwatcher/collectm/releases/tag/v1.6.0",
 
     [Parameter(Mandatory=$false)]
     [ValidateNotNullOrEmpty()]
