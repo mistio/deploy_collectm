@@ -24,6 +24,6 @@ if ($SetupConfigFile -eq $true) {
             Exit
         }
     }
-    Write-Host "Running: .\collectm.config.ps1 -filePath ""$installationDir\config\default.json"" $configArgs -restartService -svcPath ""$installationDir\bin\nssm.exe"" "
-    Invoke-Expression ".\collectm.config.ps1 -filePath ""$installationDir\config\default.json"" $configArgs -restartService -svcPath ""$installationDir\bin\nssm.exe"" "
+    Write-Host "Running: .\collectm.config.ps1 -filePath ""$installationDir\config\local.json"" $configArgs -restartService -svcPath ""$installationDir\bin\nssm.exe"" "
+    Invoke-Expression ".\collectm.config.ps1 -filePath ""$installationDir\config\local.json"" $configArgs -restartService -svcPath ""$installationDir\bin\nssm.exe"" "
 }
