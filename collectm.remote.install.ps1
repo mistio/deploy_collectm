@@ -61,11 +61,11 @@ if ($SetupConfigFile -eq $true -and !$setupArgs) {
 
 
 
-$collectmDeployScriptUrl = $collectMScriptRepo + "/blob/" + $scriptGitBranch + "/collectm.deploy.ps1"
+$collectmDeployScriptUrl = $collectMScriptRepo + "/" + $scriptGitBranch + "/collectm.deploy.ps1"
 
-$collectmConfigScriptUrl = $collectMScriptRepo + "/blob/" + $scriptGitBranch + "/collectm.config.ps1"
+$collectmConfigScriptUrl = $collectMScriptRepo + "/" + $scriptGitBranch + "/collectm.config.ps1"
 
-$collectmDownloadScriptUrl = $collectMScriptRepo + "/blob/" + $scriptGitBranch + "/collectm.download.ps1"
+$collectmDownloadScriptUrl = $collectMScriptRepo + "/" + $scriptGitBranch + "/collectm.download.ps1"
 
 $installerPath = "collectm.installer.exe"
 
