@@ -73,7 +73,7 @@ Write-Host "Fetching download script in url: ""$collectmDownloadScriptUrl"""
 
 downloadFile -url "$collectmDownloadScriptUrl" -filePath ".\collectm.download.ps1"
 
-Write-Host "Downloading CollectM installer: .\collectm.download.ps1 -url ""$collectmDownloadUrl"" -filePath ""$installerPath"""
+Write-Host "Downloading CollectM installer: .\collectm.download.ps1 -url ""$collectMUrl"" -filePath ""$installerPath"""
 
 Invoke-Expression ".\collectm.download.ps1 -url $collectmDownloadUrl -filePath $installerPath"
 
