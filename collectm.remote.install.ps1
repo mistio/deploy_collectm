@@ -67,7 +67,7 @@ $collectmConfigScriptUrl = $collectMScriptRepo + "/" + $scriptGitBranch + "/coll
 
 $collectmDownloadScriptUrl = $collectMScriptRepo + "/" + $scriptGitBranch + "/collectm.download.ps1"
 
-$installerPath = "collectm.installer.exe"
+$installerPath = ".\collectm.installer.exe"
 
 Write-Host "Fetching download script in url: ""$collectmDownloadScriptUrl"""
 
