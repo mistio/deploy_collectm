@@ -7,11 +7,11 @@ Param(
 
     [Parameter(Mandatory=$true)]
     [ValidateNotNullOrEmpty()]
-	[string]$username,
+    [string]$username,
 
-	[Parameter(Mandatory=$true)]
+    [Parameter(Mandatory=$true)]
     [ValidateNotNullOrEmpty()]
-	[string]$password,
+    [string]$password,
 
     [Parameter(Mandatory=$false)]
     [switch]$restartService=$false,
@@ -20,33 +20,33 @@ Param(
     [string]$svcPath,
 
     [Parameter(Mandatory=$false)]
-	[int32]$interval=5,
+    [int32]$interval=5,
 
     [Parameter(Mandatory=$false)]
-	[int32]$timeUntilRestart=-1,
+    [int32]$timeUntilRestart=-1,
 
     [Parameter(Mandatory=$false)]
-	[int32]$logDeletionDays=30,
+    [int32]$logDeletionDays=30,
 
     [Parameter(Mandatory=$false)]
-	[string]$httpAdmin="admin",
+    [string]$httpAdmin="admin",
 
     [Parameter(Mandatory=$false)]
-	[string]$httpPassword="admin",
+    [string]$httpPassword="admin",
 
     [Parameter(Mandatory=$false)]
-	[int32]$listenPort=25826,
+    [int32]$listenPort=25826,
 
     [Parameter(Mandatory=$false)]
     [ValidateNotNullOrEmpty()]
-	[string]$svcName="CollectM",
+    [string]$svcName="CollectM",
 
     [Parameter(Mandatory=$false)]
     [string[]]$servers=@("localhost:25826"),
     
     [Parameter(Mandatory=$false)]
     [ValidateSet("", "default", "lower", "upper")]
-	[string]$hostNameCase=""
+    [string]$hostNameCase=""
 )
 
 if($restartService -eq $true -and !$svcPath) {
@@ -102,7 +102,7 @@ foreach ($elem in $servers){
 }
 
 $configStr += "`n    ]`n  },`n"
-$configStr += "  ""Plugin"": {`n    ""collectdCompat"": {`n      ""enable"": 1`n    }`n  }`n"
+$configStr += "  ""Plugin"": {`n    ""collectdCompat"": {`n      ""enable"": 1`n    }`n,""process"": {`n      ""enable"": 0`n    }`n   }`n"
 $configStr += "}"
 
 ## Output String to File and make sure that the file is UTF 8 w/o BOM ##
